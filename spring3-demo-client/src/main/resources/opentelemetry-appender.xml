@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+  <!--  <appender name="OPEN_TELEMETRY" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender"> -->
+  
+  <springProperty scope="context" name="endpoint" source="management.otlp.logs.endpoint"/>
+  <springProperty scope="context" name="resourceAttributes" source="com.acme.otlp.logs.resource-attributes"/>
+  
+  <appender name="OPEN_TELEMETRY" class="com.acme.observability.demo.client.LogbackOpenTelemetryAppender">
+    <endpoint>${endpoint}</endpoint>
+    <captureExperimentalAttributes>true</captureExperimentalAttributes>
+    <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
+    <resourceAttributes>${resourceAttributes}</resourceAttributes>
+  </appender>
+</included>
+
+

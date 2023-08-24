@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+Custom appender definition for Logback.
+The appender is based on the Logback Console Appender and reconfigures 
+its format / encoding using the Logstash Logback encoder described here:
+
+https://github.com/logstash/logstash-logback-encoder
+
+Logstash Logback encoder is a powerful encoder for JSON-output of logs and
+is highly configurable.
+ -->
+
+<included>
+  <appender name="CONSOLE-JSON-SAP" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+      <mdcKeyFieldName>spanId=span_id</mdcKeyFieldName>     <!-- reconfigures Logstash Logback encoder to use 'span_id' instead of `spanId`  -->
+      <mdcKeyFieldName>traceId=trace_id</mdcKeyFieldName>   <!-- reconfigures Logstash Logback encoder to use 'trace_id' instead of `traceId`-->
+      <fieldNames>
+        <timestamp>timestamp</timestamp> <!-- reconfigures Logstash Logback encoder to use 'timestamp' instead of '@timestamp'-->
+        <message>body</message>          <!-- reconfigures Logstash Logback encoder to use 'body' instead of 'message'        -->
+        <!-- Enable logging of request and response headers  -->
+        <!-- 
+        <requestHeaders>request_headers</requestHeaders>
+        <responseHeaders>response_headers</responseHeaders>
+        -->
+      </fieldNames>
+    </encoder>
+  </appender>
+</included>

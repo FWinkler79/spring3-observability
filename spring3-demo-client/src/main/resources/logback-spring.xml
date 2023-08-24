@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+
+ <!-- The following properties are used by Spring Boot configurations of 
+    the logback stack. Defaults for these properties are set in "org/springframework/boot/logging/logback/defaults.xml". 
+    
+    You can simply google for the these file paths, e.g. "org/springframework/boot/logging/logback/defaults.xml" 
+    and you will find the files in Spring Boot's github repository for inspection. 
+    
+    Note: you can override the defaults, simply by declaring the properties below 
+    (uncomment and provide a custom value). Inspect the default values, to know 
+    the format custom values should be provided in. 
+    
+    Also see: 
+    - How to Configure Logback Logging: https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-configure-logback-for-logging 
+    - Custom logback extensions: https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-logback-extensions 
+  -->
+
+  <!-- Properties used in "org/springframework/boot/logging/logback/console-appender.xml" -->
+  <!-- <property name="CONSOLE_LOG_PATTERN" value="..." /> -->
+  <!-- <property name="CONSOLE_LOG_CHARSET" value="..." /> -->
+
+  <!-- Properties used in "org/springframework/boot/logging/logback/file-appender.xml" -->
+  <springProperty scope="context" name="appName" source="spring.application.name"/>
+  <springProperty scope="context" name="LOG_FILE" source="LOG_FILE" defaultValue="logs/application.log" />
+  
+  <!-- <property name="LOGBACK_ROLLINGPOLICY_FILE_NAME_PATTERN" value="..." /> -->
+  <!-- <property name="LOGBACK_ROLLINGPOLICY_CLEAN_HISTORY_ON_START" value="..." /> -->
+  <!-- <property name="LOGBACK_ROLLINGPOLICY_MAX_FILE_SIZE" value="..." /> -->
+  <!-- <property name="LOGBACK_ROLLINGPOLICY_TOTAL_SIZE_CAP" value="..." /> -->
+  <!-- <property name="LOGBACK_ROLLINGPOLICY_MAX_HISTORY" value="..." /> -->
+
+  <!-- Note: we are not using default FILE appender, but our own custom one. -->
+  <!-- <include resource="org/springframework/boot/logging/logback/file-appender.xml" 
+    /> -->
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+  <include resource="application-file-json-appender.xml" />
+  <include resource="console-json-customized-appender.xml" />
+  <include resource="console-json-sap-appender.xml" />
+  <include resource="console-json-appender.xml" />
+  <include resource="opentelemetry-appender.xml" />
+
+  <!-- <property name="LOG_FILE" value="spring.log"/> <include resource="org/springframework/boot/logging/logback/file-appender.xml"/> -->
+  
+  <root level="INFO">    
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="APPLICATION-LOG-FILE" />
+    <appender-ref ref="OPEN_TELEMETRY" />
+    <!-- <appender-ref ref="CONSOLE-JSON" />            Log output to console in JSON format. -->
+    <!-- <appender-ref ref="CONSOLE-JSON-SAP" /> -->        <!-- Log output to console in SAP-specific JSON format. -->
+    <!-- <appender-ref ref="CONSOLE-JSON-CUSTOMIZED" /> --> <!-- Log output to console in custom JSON format. -->
+  </root>
+</configuration>

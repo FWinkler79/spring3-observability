@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: spring-client
+
+server:
+  port: 8080
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+  otlp:
+    metrics:
+      export:
+        url: http://localhost:4318/v1/metrics      # default: http://localhost:4318/v1/metrics
+    tracing:
+      endpoint: http://localhost:4318/v1/traces    # default: http://localhost:4318/v1/traces
+      
+    # Non-Spring Boot: This was introduced by custom LogbackOpenTelemetryAppender
+    # Sooner or later Spring Boot will also support this.
+    logs:
+      endpoint: http://localhost:4318/v1/logs      #http://localhost:4318/v1/logs 
+
+com.acme.server.base-url: http://localhost:8081     # No '/' at the end!
+com.acme.otlp.logs.resource-attributes: "service.name=${spring.application.name},service.namespace=com.acme.observability.demo,something=else"
+
+
+# traceID and spanId are predefined MDC keys - we want the logs to include them.
+# This configuration only works with standard Logback configuration. Not in our case.
+#logging:
+#  pattern:
+#   level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
