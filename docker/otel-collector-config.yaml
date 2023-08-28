@@ -1,0 +1,39 @@
+extensions:
+  health_check:
+
+receivers:
+  # Ingest OTLP via http/protobuf
+  otlp:
+    protocols:
+      http:
+
+processors:
+  batch:
+    send_batch_size: 10000
+    timeout: 5s
+
+exporters:
+  # Local debug logs of the collector itself.
+  logging:
+    verbosity: detailed
+
+service:
+  pipelines:
+
+    # Disable log ingestion. In this setup we concentrate on traces.
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+
+    traces:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [logging]
+
+  extensions: [health_check]

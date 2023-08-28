@@ -1,0 +1,9 @@
+
+services:
+    otel-collector:
+        image: otel/opentelemetry-collector:latest
+        ports:
+          - 4318:4318
+        volumes:
+            - ./otel-collector-config.yaml:/etc/otelcol/config.yaml:ro            # volume mount when using core collector distro.
+            # - ./otel-collector-config.yaml:/etc/otelcol-contrib/config.yaml:ro  # volume mount when using contrib collector distro.
