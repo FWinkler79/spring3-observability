@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <!-- Properties used in "org/springframework/boot/logging/logback/file-appender.xml" -->
+  <springProperty scope="context" name="appName" source="spring.application.name"/>
+  <springProperty scope="context" name="LOG_FILE" source="LOG_FILE" defaultValue="logs/application.log" />
+
+  <include resource="org/springframework/boot/logging/logback/defaults.xml" />
+  <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+  <appender name="OpenTelemetry" class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+    <captureExperimentalAttributes>true</captureExperimentalAttributes>
+    <captureMdcAttributes>*</captureMdcAttributes>
+  </appender>
+  
+  <root level="INFO">    
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="OpenTelemetry" />
+  </root>
+</configuration>

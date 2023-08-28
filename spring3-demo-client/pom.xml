@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>3.1.2</version>
+    <relativePath />
+    <!-- lookup parent from repository -->
+  </parent>
+  <groupId>com.sap.observability</groupId>
+  <artifactId>spring3-demo-client</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>spring3-demo</name>
+  <description>Spring Boot 3 Observability Demo</description>
+  <properties>
+    <java.version>20</java.version>
+    <logstash-logback-encoder.version>7.4</logstash-logback-encoder.version>
+    <opentelemetry-logback-appender.version>1.29.0-alpha</opentelemetry-logback-appender.version>
+    <opentelemetry-sdk-logs.version>1.29.0</opentelemetry-sdk-logs.version>
+    <opentelemetry-otlp-exporter-logs.version>1.26.0-alpha</opentelemetry-otlp-exporter-logs.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Actuator for Metrics and Management Endpoint Exposure -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+
+    <!-- For Observation AOP -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-aop</artifactId>
+    </dependency>
+
+    <!-- OTLP Metrics exposure -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-otlp</artifactId>
+    </dependency>
+
+    <!-- Micrometer Tracing APIs (formerly known as Spring Cloud Sleuth)-->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing</artifactId>
+    </dependency>
+
+    <!-- Micrometer Tracing OTEL Implementation -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing-bridge-otel</artifactId>
+    </dependency>
+
+    <!-- OpenTelemetry OTLP exporter for trace spans -->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp</artifactId>
+    </dependency>
+
+    <!-- Logback Appender for JSON-based log output -->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback-encoder.version}</version>
+    </dependency>
+
+    <!-- OpenTelemetry Logback Appender -->
+    <!-- See also:
+    https://github.com/open-telemetry/opentelemetry-java-instrumentation/tree/main/instrumentation/logback/logback-appender-1.0/library -->
+    <dependency>
+      <groupId>io.opentelemetry.instrumentation</groupId>
+      <artifactId>opentelemetry-logback-appender-1.0</artifactId>
+      <version>${opentelemetry-logback-appender.version}</version>
+    </dependency>
+
+    <!-- OpenTelemetry SDK classes for logging -->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk-logs</artifactId>
+      <version>${opentelemetry-sdk-logs.version}</version>
+    </dependency>
+
+    <!-- OTLP exporter classes for logging -->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp-logs</artifactId>
+      <version>${opentelemetry-otlp-exporter-logs.version}</version>
+    </dependency>
+
+<!-- 
+     These dependencies are defined by Spring Boot's BOM already. Only change the versions if you need more up to date ones. 
+     But beware as this may have impact on the other OTEL dependencies used by Spring Boot.
+     In case you need newer versions of the OTEL dependencies, prefer updating to newer Spring Boot versions, milestones or snapshots.
+-->
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+      <version>1.29.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp-common</artifactId>
+      <version>1.25.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
